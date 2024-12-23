@@ -11,6 +11,8 @@
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="6.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.11" />
+        <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="8.0.11" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
         <PackageReference Include="xunit" Version="2.5.3"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3"/>
@@ -18,6 +20,18 @@
 
     <ItemGroup>
         <Using Include="Xunit"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\src\TodoApi.API\TodoApi.API.csproj" />
+      <ProjectReference Include="..\src\TodoApi.Application\TodoApi.Application.csproj" />
+      <ProjectReference Include="..\src\TodoApi.Infrastructure\TodoApi.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.EntityFrameworkCore.InMemory">
+        <HintPath>..\..\..\.nuget\packages\microsoft.entityframeworkcore.inmemory\8.0.11\lib\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
