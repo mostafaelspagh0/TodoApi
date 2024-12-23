@@ -48,4 +48,20 @@ public class TodoController : ControllerBase
         var todos = await _todoService.GetPendingTodosAsync();
         return Ok(todos);
     }
+    
+    [HttpPut("{id}/complete")]
+    public async Task<ActionResult<TodoItem>> CompleteTodo(int id)
+    {
+        try
+        {
+            var todo = await _todoService.MarkAsCompletedAsync(id);
+            _logger.LogInformation("Marked todo item {Id} as completed", id);
+            return Ok(todo);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            _logger.LogWarning(ex, "Attempt to complete non-existent todo item {Id}", id);
+            return NotFound(ex.Message);
+        }
+    }
 }
