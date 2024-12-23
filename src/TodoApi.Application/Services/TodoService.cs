@@ -30,4 +30,14 @@ public class TodoService(ITodoRepository _repository) : ITodoService
     {
         return await _repository.GetPendingAsync();
     }
+
+    public async Task<TodoItem> MarkAsCompletedAsync(int id)
+    {
+        var todo = await _repository.GetByIdAsync(id);
+        if (todo == null)
+            throw new KeyNotFoundException($"Todo item with ID {id} not found");
+
+        todo.IsCompleted = true;
+        return await _repository.UpdateAsync(todo);
+    }
 }

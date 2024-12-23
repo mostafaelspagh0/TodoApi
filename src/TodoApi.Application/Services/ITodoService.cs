@@ -8,4 +8,5 @@ public interface ITodoService
     Task<TodoItem> CreateTodoAsync(CreateTodoDto dto);
     Task<IEnumerable<TodoItem>> GetAllTodosAsync();
     Task<IEnumerable<TodoItem>> GetPendingTodosAsync();
+    Task<TodoItem> MarkAsCompletedAsync(int id);
 }
