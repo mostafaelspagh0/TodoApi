@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using TodoApi.Application.Services;
 using TodoApi.Application.DTOs;
 using TodoApi.Domain.Models;
-using TodoApi.Domain.Interfaces;
 
 namespace TodoApi.API.Controllers;
 
