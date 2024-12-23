@@ -9,6 +9,14 @@ namespace TodoApi.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Configure Serilog
+            var logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .Enrich.FromLogContext()
+                .CreateLogger();
+
+            builder.Host.UseSerilog(logger);
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -18,9 +26,6 @@ namespace TodoApi.API
 
             builder.Services.AddScoped<TodoApi.Domain.Interfaces.ITodoRepository, TodoApi.Infrastructure.Repositories.TodoRepository>();
             builder.Services.AddScoped<TodoApi.Application.Services.ITodoService, TodoApi.Application.Services.TodoService>();
-
-            builder.Host.UseSerilog((context, config) =>
-                config.WriteTo.Console());
 
             var app = builder.Build();
 
