@@ -25,4 +25,9 @@ public class TodoService(ITodoRepository _repository) : ITodoService
     {
         return await _repository.GetAllAsync();
     }
+
+    public async Task<IEnumerable<TodoItem>> GetPendingTodosAsync()
+    {
+        return await _repository.GetPendingAsync();
+    }
 }

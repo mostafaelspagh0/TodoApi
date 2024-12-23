@@ -101,4 +101,43 @@ public class TodoServiceTests
         _mockRepository.Verify(r => r.GetAllAsync(), Times.Once);
     }
     #endregion
+    
+    #region GetPendingTodosAsync Tests
+    [Fact]
+    public async Task GetPendingTodosAsync_ReturnsPendingTodos()
+    {
+        // Arrange
+        var todos = new List<TodoItem>
+        {
+            new() { Id = 1, Title = "Todo 1", IsCompleted = false },
+            new() { Id = 2, Title = "Todo 2", IsCompleted = true }
+        };
+
+        _mockRepository.Setup(r => r.GetPendingAsync())
+            .ReturnsAsync(todos.Where(t => !t.IsCompleted));
+
+        // Act
+        var result = await _todoService.GetPendingTodosAsync();
+
+        // Assert
+        Assert.Single(result);
+        Assert.False(result.First().IsCompleted);
+        _mockRepository.Verify(r => r.GetPendingAsync(), Times.Once);
+    }
+
+    [Fact]
+    public async Task GetPendingTodosAsync_WhenNoPendingTodos_ReturnsEmptyList()
+    {
+        // Arrange
+        _mockRepository.Setup(r => r.GetPendingAsync())
+            .ReturnsAsync(new List<TodoItem>());
+
+        // Act
+        var result = await _todoService.GetPendingTodosAsync();
+
+        // Assert
+        Assert.Empty(result);
+        _mockRepository.Verify(r => r.GetPendingAsync(), Times.Once);
+    }
+    #endregion
 }
