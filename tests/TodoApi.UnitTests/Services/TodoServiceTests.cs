@@ -63,4 +63,42 @@ public class TodoServiceTests
     }
 
     #endregion
+    
+    #region GetAllTodosAsync Tests
+    [Fact]
+    public async Task GetAllTodosAsync_ReturnsAllTodos()
+    {
+        // Arrange
+        var expectedTodos = new List<TodoItem>
+        {
+            new() { Id = 1, Title = "Todo 1" },
+            new() { Id = 2, Title = "Todo 2" }
+        };
+
+        _mockRepository.Setup(r => r.GetAllAsync())
+            .ReturnsAsync(expectedTodos);
+
+        // Act
+        var result = await _todoService.GetAllTodosAsync();
+
+        // Assert
+        Assert.Equal(expectedTodos.Count, result.Count());
+        _mockRepository.Verify(r => r.GetAllAsync(), Times.Once);
+    }
+
+    [Fact]
+    public async Task GetAllTodosAsync_WhenNoTodos_ReturnsEmptyList()
+    {
+        // Arrange
+        _mockRepository.Setup(r => r.GetAllAsync())
+            .ReturnsAsync(new List<TodoItem>());
+
+        // Act
+        var result = await _todoService.GetAllTodosAsync();
+
+        // Assert
+        Assert.Empty(result);
+        _mockRepository.Verify(r => r.GetAllAsync(), Times.Once);
+    }
+    #endregion
 }
