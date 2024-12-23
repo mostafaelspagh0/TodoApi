@@ -41,4 +41,11 @@ public class TodoController : ControllerBase
         var todos = await _todoService.GetAllTodosAsync();
         return Ok(todos);
     }
+
+    [HttpGet("pending")]
+    public async Task<ActionResult<IEnumerable<TodoItem>>> GetPendingTodos()
+    {
+        var todos = await _todoService.GetPendingTodosAsync();
+        return Ok(todos);
+    }
 }

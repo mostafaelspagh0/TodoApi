@@ -83,4 +83,27 @@ public class TodoControllerTests
         Assert.Equal(2, returnValue.Count);
     }
     #endregion
+    
+    #region GetPendingTodos Tests
+    [Fact]
+    public async Task GetPendingTodos_ReturnsOkResultWithPendingTodos()
+    {
+        // Arrange
+        var pendingTodos = new List<TodoItem>
+        {
+            new() { Id = 1, Title = "Todo 1", IsCompleted = false }
+        };
+            
+        _mockService.Setup(s => s.GetPendingTodosAsync())
+            .ReturnsAsync(pendingTodos);
+
+        // Act
+        var result = await _controller.GetPendingTodos();
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var returnValue = Assert.IsType<List<TodoItem>>(okResult.Value);
+        Assert.Single(returnValue);
+    }
+    #endregion
 }
