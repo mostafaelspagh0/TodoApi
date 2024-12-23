@@ -50,6 +50,7 @@ public class TodoControllerTests : IClassFixture<WebApplicationFactory<TodoApi.A
     }
 
     [Fact]
+    [Trait("Category", "E2E")]
     public async Task CreateTodo_WithValidData_ReturnsCreatedTodo()
     {
         // Arrange
@@ -72,6 +73,7 @@ public class TodoControllerTests : IClassFixture<WebApplicationFactory<TodoApi.A
     }
 
     [Fact]
+    [Trait("Category", "E2E")]
     public async Task CreateTodo_WithInvalidData_ReturnsBadRequest()
     {
         // Arrange
@@ -89,6 +91,7 @@ public class TodoControllerTests : IClassFixture<WebApplicationFactory<TodoApi.A
     }
 
     [Fact]
+    [Trait("Category", "E2E")]
     public async Task GetAllTodos_ReturnsAllTodos()
     {
         // Arrange
@@ -109,6 +112,7 @@ public class TodoControllerTests : IClassFixture<WebApplicationFactory<TodoApi.A
     }
 
     [Fact]
+    [Trait("Category", "E2E")]
     public async Task GetPendingTodos_ReturnsOnlyPendingTodos()
     {
         // Arrange
@@ -133,6 +137,7 @@ public class TodoControllerTests : IClassFixture<WebApplicationFactory<TodoApi.A
     }
 
     [Fact]
+    [Trait("Category", "E2E")]
     public async Task CompleteTodo_WithValidId_ReturnsTodoWithCompletedStatus()
     {
         // Arrange
@@ -151,6 +156,7 @@ public class TodoControllerTests : IClassFixture<WebApplicationFactory<TodoApi.A
     }
 
     [Fact]
+    [Trait("Category", "E2E")]
     public async Task CompleteTodo_WithInvalidId_ReturnsNotFound()
     {
         // Act

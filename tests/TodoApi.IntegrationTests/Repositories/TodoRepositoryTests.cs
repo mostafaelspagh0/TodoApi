@@ -23,6 +23,7 @@ public class TodoRepositoryTests
     #region CreateAsync Tests
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task CreateAsync_ValidTodo_ReturnsTodoWithId()
     {
         // Arrange
@@ -41,6 +42,7 @@ public class TodoRepositoryTests
     #region GetByIdAsync Tests
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task GetByIdAsync_ExistingTodo_ReturnsTodo()
     {
         // Arrange
@@ -57,6 +59,7 @@ public class TodoRepositoryTests
     }
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task GetByIdAsync_NonExistingTodo_ReturnsNull()
     {
         // Act
@@ -71,6 +74,7 @@ public class TodoRepositoryTests
     #region GetAllAsync Tests
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task GetAllAsync_WithTodos_ReturnsAllTodos()
     {
         // Arrange
@@ -90,6 +94,7 @@ public class TodoRepositoryTests
     }
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task GetAllAsync_WithNoTodos_ReturnsEmptyList()
     {
         // Act
@@ -104,6 +109,7 @@ public class TodoRepositoryTests
     #region GetPendingAsync Tests
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task GetPendingAsync_WithMixedTodos_ReturnsPendingOnly()
     {
         // Arrange
@@ -129,6 +135,7 @@ public class TodoRepositoryTests
     #region UpdateAsync Tests
 
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task UpdateAsync_ExistingTodo_UpdatesAndReturnsTodo()
     {
         // Arrange
