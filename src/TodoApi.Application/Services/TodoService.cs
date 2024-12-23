@@ -20,4 +20,9 @@ public class TodoService(ITodoRepository _repository) : ITodoService
 
         return await _repository.CreateAsync(todo);
     }
+
+    public async Task<IEnumerable<TodoItem>> GetAllTodosAsync()
+    {
+        return await _repository.GetAllAsync();
+    }
 }
