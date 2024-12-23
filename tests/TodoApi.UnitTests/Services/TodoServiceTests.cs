@@ -63,8 +63,9 @@ public class TodoServiceTests
     }
 
     #endregion
-    
+
     #region GetAllTodosAsync Tests
+
     [Fact]
     public async Task GetAllTodosAsync_ReturnsAllTodos()
     {
@@ -100,9 +101,11 @@ public class TodoServiceTests
         Assert.Empty(result);
         _mockRepository.Verify(r => r.GetAllAsync(), Times.Once);
     }
+
     #endregion
-    
+
     #region GetPendingTodosAsync Tests
+
     [Fact]
     public async Task GetPendingTodosAsync_ReturnsPendingTodos()
     {
@@ -139,5 +142,75 @@ public class TodoServiceTests
         Assert.Empty(result);
         _mockRepository.Verify(r => r.GetPendingAsync(), Times.Once);
     }
+
+    #endregion
+
+    #region MarkAsCompletedAsync Tests
+
+    [Fact]
+    public async Task MarkAsCompletedAsync_WithValidId_ReturnsTodoItem()
+    {
+        // Arrange
+        var existingTodo = new TodoItem
+        {
+            Id = 1,
+            Title = "Test Todo",
+            IsCompleted = false
+        };
+
+        _mockRepository.Setup(r => r.GetByIdAsync(1))
+            .ReturnsAsync(existingTodo);
+        _mockRepository.Setup(r => r.UpdateAsync(It.IsAny<TodoItem>()))
+            .ReturnsAsync((TodoItem todo) => todo);
+
+        // Act
+        var result = await _todoService.MarkAsCompletedAsync(1);
+
+        // Assert
+        Assert.True(result.IsCompleted);
+        _mockRepository.Verify(r => r.GetByIdAsync(1), Times.Once);
+        _mockRepository.Verify(r => r.UpdateAsync(It.IsAny<TodoItem>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task MarkAsCompletedAsync_WithInvalidId_ThrowsKeyNotFoundException()
+    {
+        // Arrange
+        _mockRepository.Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+            .ReturnsAsync((TodoItem)null);
+
+        // Act & Assert
+        await Assert.ThrowsAsync<KeyNotFoundException>(
+            () => _todoService.MarkAsCompletedAsync(1));
+
+        _mockRepository.Verify(r => r.GetByIdAsync(1), Times.Once);
+        _mockRepository.Verify(r => r.UpdateAsync(It.IsAny<TodoItem>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task MarkAsCompletedAsync_WithAlreadyCompletedTodo_UpdatesAndReturnsTodo()
+    {
+        // Arrange
+        var existingTodo = new TodoItem
+        {
+            Id = 1,
+            Title = "Test Todo",
+            IsCompleted = true
+        };
+
+        _mockRepository.Setup(r => r.GetByIdAsync(1))
+            .ReturnsAsync(existingTodo);
+        _mockRepository.Setup(r => r.UpdateAsync(It.IsAny<TodoItem>()))
+            .ReturnsAsync((TodoItem todo) => todo);
+
+        // Act
+        var result = await _todoService.MarkAsCompletedAsync(1);
+
+        // Assert
+        Assert.True(result.IsCompleted);
+        _mockRepository.Verify(r => r.GetByIdAsync(1), Times.Once);
+        _mockRepository.Verify(r => r.UpdateAsync(It.IsAny<TodoItem>()), Times.Once);
+    }
+
     #endregion
 }
