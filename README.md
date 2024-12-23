@@ -119,8 +119,15 @@ The project uses Entity Framework Core with an in-memory database for simplicity
 3. Modify the DbContext configuration in `Program.cs`
 
 ### Testing
-
 The project includes both unit tests and integration tests:
+
+### xUnit Traits
+
+xUnit traits are used for categorizing tests. This project uses the following traits:
+
+- `[Trait("Category", "Integration")]` for integration tests.
+- `[Trait("Category", "E2E")]` for end-to-end tests.
+
 
 ```bash
 # Run unit tests
@@ -128,6 +135,9 @@ dotnet test tests/TodoApi.UnitTests
 
 # Run integration tests
 dotnet test tests/TodoApi.IntegrationTests
+
+# Run end2end tests
+dotnet test tests/TodoApi.E2ETests
 ```
 
 ### Logging
