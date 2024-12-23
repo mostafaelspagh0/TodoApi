@@ -3,6 +3,8 @@ using TodoApi.Application.DTOs;
 using TodoApi.Application.Services;
 using Microsoft.Extensions.Logging;
 using TodoApi.API.Controllers;
+using TodoApi.Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TodoApi.UnitTests.Controllers;
 
@@ -56,5 +58,29 @@ public class TodoControllerTests
         Assert.IsType<Microsoft.AspNetCore.Mvc.BadRequestObjectResult>(result.Result);
     }
 
+    #endregion
+    
+    #region GetAllTodos Tests
+    [Fact]
+    public async Task GetAllTodos_ReturnsOkResultWithTodos()
+    {
+        // Arrange
+        var todos = new List<TodoItem>
+        {
+            new() { Id = 1, Title = "Todo 1" },
+            new() { Id = 2, Title = "Todo 2" }
+        };
+            
+        _mockService.Setup(s => s.GetAllTodosAsync())
+            .ReturnsAsync(todos);
+
+        // Act
+        var result = await _controller.GetAllTodos();
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var returnValue = Assert.IsType<List<TodoItem>>(okResult.Value);
+        Assert.Equal(2, returnValue.Count);
+    }
     #endregion
 }
